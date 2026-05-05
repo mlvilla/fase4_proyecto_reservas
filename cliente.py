@@ -1,43 +1,70 @@
-# importacion de excepciones a nuestras clases 
-from excepciones import ErrorDeNombres
-from excepciones import ErrorDeApellidos
-from excepciones import ErrorDeDocumento
-from excepciones import ErrorDeTelefono 
+from excepciones import (
+    ErrorDeNombres,
+    ErrorDeApellidos,
+    ErrorDeDocumento,
+    ErrorDeTelefono
+)
+
 class Cliente:
     def __init__(self, nombres, apellidos, documento_identidad, telefono, direccion):
 
-        # quita los espacios
+        # -------------------------
+        # VALIDACIÓN DE NOMBRES
+        # -------------------------
         nombre_limpio = nombres.strip()
-
-        # 2 verifica que hallan datos
         if not nombre_limpio:
             raise ErrorDeNombres("El nombre no puede estar vacío")
 
-        # separa las palabras
-        palabras = nombre_limpio.split()
-
-        # Recorre las palabra
-        for palabra in palabras:
-
-            # revisa que las palabras sea solo texto 
+        for palabra in nombre_limpio.split():
             if not palabra.isalpha():
                 raise ErrorDeNombres("El nombre solo debe contener letras")
 
-        # Validación de apellidos
+        # -------------------------
+        # VALIDACIÓN DE APELLIDOS
+        # -------------------------
         if not apellidos.strip():
-            raise ErrorDeApellidos("no puedes dejar el cuadro sin el apellido.")
+            raise ErrorDeApellidos("El apellido no puede estar vacío")
 
-        # Validación de documento
+        # -------------------------
+        # VALIDACIÓN DE DOCUMENTO
+        # -------------------------
         if not documento_identidad.isdigit():
-            raise ErrorDeDocumento("El documento debe contener solo números.")
+            raise ErrorDeDocumento("El documento debe contener solo números")
 
-        # Validación de teléfono
+        # -------------------------
+        # VALIDACIÓN DE TELÉFONO
+        # -------------------------
         if not telefono.isdigit():
-            raise ErrorDeTelefono("Para el telefono debe contener solo números")
+            raise ErrorDeTelefono("El teléfono debe contener solo números")
 
-        # Encapsulación
-        self._nombres = nombres
-        self._apellidos = apellidos
-        self._documento_identidad = documento_identidad
-        self._telefono = telefono
-        self._direccion = direccion
+        # -------------------------
+        # ENCAPSULAMIENTO
+        # -------------------------
+        self.__nombres = nombres
+        self.__apellidos = apellidos
+        self.__documento_identidad = documento_identidad
+        self.__telefono = telefono
+        self.__direccion = direccion
+
+    # -------------------------
+    # GETTERS solo lectura
+    # -------------------------
+    @property
+    def nombres(self):
+        return self.__nombres
+
+    @property
+    def apellidos(self):
+        return self.__apellidos
+
+    @property
+    def documento_identidad(self):
+        return self.__documento_identidad
+
+    @property
+    def telefono(self):
+        return self.__telefono
+
+    @property
+    def direccion(self):
+        return self.__direccion
